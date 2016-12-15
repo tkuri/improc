@@ -4,6 +4,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <OutDir>../../bin/$(Configuration)\</OutDir>
+    <ReferencePath>$(ReferencePath)</ReferencePath>
+    <LibraryPath>$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <PostBuildEvent>
@@ -16,6 +18,10 @@ if not exist ..\..\bin\debug\$(ProjectName).local.txt copy $(ProjectName).origin
     <ClCompile>
       <AdditionalIncludeDirectories>../../sources/</AdditionalIncludeDirectories>
     </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
+    </Link>
   </ItemDefinitionGroup>
   <ItemGroup />
 </Project>
