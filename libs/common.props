@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <OutDir>../../bin/$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <PostBuildEvent>
+      <Command>if exist $(ProjectName).original.txt (
+if not exist $(ProjectName).local.txt copy $(ProjectName).original.txt $(ProjectName).local.txt
+if not exist ..\..\bin\release\$(ProjectName).local.txt copy $(ProjectName).original.txt ..\..\bin\release\$(ProjectName).local.txt
+if not exist ..\..\bin\debug\$(ProjectName).local.txt copy $(ProjectName).original.txt ..\..\bin\debug\$(ProjectName).local.txt
+)</Command>
+    </PostBuildEvent>
+    <ClCompile>
+      <AdditionalIncludeDirectories>../../sources/</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup />
+</Project>
