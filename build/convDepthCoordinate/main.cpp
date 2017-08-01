@@ -16,7 +16,7 @@ template<typename TMat>
 static int writeNormal(const std::string& filename, TMat& normal, int option = 0)
 {
 	cv::Mat temp;
-	switch (option) {
+	switch (option) {	
 	case 0:
 		normal.convertTo(temp, CV_16U, 32767.0, 32768.0);
 		break;
