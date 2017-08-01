@@ -6,8 +6,8 @@
 #include <iomanip>
 #include <opencv2/opencv.hpp>
 
-//! 0:sRGB, 1:original
-const int gammaMode = 1;
+//! 0:sRGB, 1:ISGamma, 2:3PointGamma
+const int gammaMode = 2;
 
 const double idx[1024] = 
 {
@@ -78,6 +78,53 @@ cv::Mat Gamma(const cv::Mat& src)
 
 }
 
+cv::Mat Gamma3Point(const cv::Mat& src)
+{
+	cv::Mat dst = src.clone();
+
+	const float gamma_coefficients[3] = {
+		1.6f, 2.2f, 1.6f
+		//1.5f, 2.5f, 6.0f
+	};
+
+    const float param_gamma_coefficients[3] = {
+        1.0f / gamma_coefficients[0],
+        1.0f / gamma_coefficients[1],
+        1.0f / gamma_coefficients[2]
+    };
+
+
+#pragma omp parallel for
+	for( int y = 0 ; y < src.rows ; y++ )
+	{
+		for( int x = 0 ; x < src.cols ; x++ )
+		{
+			cv::Vec3f v = src.at<cv::Vec3f>(y, x);
+			for(int c = 0; c < 3; c++){
+				v[c] = std::max(v[c], 0.0f);
+
+				float pixel_gm[3];
+                for (int i = 0; i < 3; ++i){
+                    pixel_gm[i] = pow(v[c], param_gamma_coefficients[i]);
+                }
+				float pixel_out;
+                if (pixel_gm[1] < 0.5f){
+                    auto blend_ratio = pixel_gm[1] * 2.0f;
+                    pixel_out = pixel_gm[0] * (1.0f - blend_ratio) + pixel_gm[1] * blend_ratio;
+                }
+                else{
+                    auto blend_ratio = (pixel_gm[1] - 0.5f) * 2.0f;
+                    pixel_out = pixel_gm[1] * (1.0f - blend_ratio) + pixel_gm[2] * blend_ratio;
+                }
+				v[c] = pixel_out;
+			}
+			dst.at<cv::Vec3f>(y, x) = v;
+		}
+	}
+	return dst;
+
+}
+
 int main( int argc, char** argv )
 {
 	if(argc < 2) return 1;
@@ -100,8 +147,12 @@ int main( int argc, char** argv )
 		if(gammaMode==0){
 			cv::pow(tmp, 1.0f/gammaCoeff, tmp);
 		}
-		else{
+		else if(gammaMode==1){
 			cv::Mat tmp2 = Gamma(tmp);
+			tmp = tmp2;
+		}
+		else{
+			cv::Mat tmp2 = Gamma3Point(tmp);
 			tmp = tmp2;
 		}
 

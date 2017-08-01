@@ -28,6 +28,27 @@ int profile( const cv::Mat& src,  int x0, int y0, int x1, int y1 )
 	return 0;
 }
 
+template<class T>
+int profile3ch( const cv::Mat& src,  int x0, int y0, int x1, int y1 )
+{
+	std::ofstream ofs( ofn.c_str(), std::ios::out );
+	ofs << "x,y,value" << std::endl;
+
+	for( int y = y0 ; y <= y1 ; y++ )
+	{
+		for( int x = x0 ; x <= x1 ; x++ )
+		{
+			T v = src.at<T>( y, x );
+			ofs << x << "," << y << "," << v << std::endl;
+			//ofs << x << "," << y << "," << std::to_string(static_cast<long double>(v[2])) << "," << v[1] << "," << v[0] << std::endl;
+		}
+	}
+
+	ofs.close();
+
+	return 0;
+}
+
 int main( int argc, char** argv )
 {
 	std::string file;
@@ -40,7 +61,7 @@ int main( int argc, char** argv )
 	int x1 = std::atoi(argv[4]);
 	int y1 = std::atoi(argv[5]);
 
-	img = cv::imread( file.c_str(),  CV_LOAD_IMAGE_ANYDEPTH );
+	img = cv::imread( file.c_str(),  CV_LOAD_IMAGE_ANYDEPTH | CV_LOAD_IMAGE_ANYCOLOR);
 
 	int width = img.cols;
 	int height = img.rows;
@@ -49,6 +70,8 @@ int main( int argc, char** argv )
 
 	if( dep == 0 && ch == 1 ) profile<uchar>( img, x0, y0, x1, y1 );
 	else if( dep == 2 && ch == 1 ) profile<ushort>( img, x0, y0, x1, y1 );
+	else if( dep == 0 && ch == 3 ) profile3ch<cv::Vec3b>( img, x0, y0, x1, y1 );
+	else if( dep == 2 && ch == 3 ) profile3ch<cv::Vec3w>( img, x0, y0, x1, y1 );
 	else
 	{
 		std::cout << " Error : Invalid depth or channels. ";

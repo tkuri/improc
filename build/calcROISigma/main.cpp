@@ -50,10 +50,11 @@ int calcSigma( const cv::Mat& src,  int x0, int y0, int w, int h )
 
 	if(lumSigma > 0.0f) snr = 20.0f * log10(lumDC / lumSigma);
 
+	ofs << lumDC << "," << lumSigma << std::endl;
 	//ofs << lumDC << "," << lumSigma << "," << snr << std::endl;
 	//ofs << lumDC << "," << lumRMS <<  "," << lumSigma << std::endl;
 	//ofs << lumRMS << std::endl;
-	ofs << lumRMS << " ";
+	//ofs << lumRMS << " ";
 	ofs.close();
 
 	return 0;

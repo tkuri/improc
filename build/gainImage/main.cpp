@@ -36,9 +36,9 @@ int main( int argc, char** argv )
 		file = argv[n];
 		//const float gain = static_cast<float>(std::atof(argv[2]));
 		//const float gain = 1 / 16.0f;
-		const float gain = 16.0f;
+		const float gain = 64.0f;
 
-		img = cv::imread( file.c_str(),  CV_LOAD_IMAGE_ANYDEPTH );
+		img = cv::imread( file.c_str(),  6 );
 
 		dst = img.clone();
 
