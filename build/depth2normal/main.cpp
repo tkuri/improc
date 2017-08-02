@@ -111,18 +111,19 @@ int main( int argc, char** argv )
 
 	cv::Mat inDepth; //! 16bit 1ch
 	cv::Mat_<TNormal> outNormal; //! 16bit 3ch
-	float fl, cx, cy;
+	float fl, cx, cy, maxDepth;
 	int tap;
 
-	if(argc == 7) {
+	if(argc == 8) {
 		inDepth = cv::imread(argv[1], -1);
 		fl = static_cast<float>(atof(argv[2]));
 		cx = static_cast<float>(atof(argv[3]));
 		cy = static_cast<float>(atof(argv[4]));
-		tap = atoi(argv[5]);
+		maxDepth = static_cast<float>(atof(argv[5]));
+		tap = atoi(argv[6]);
 
 		std::cout << "depth : " << argv[1] << std::endl;
-		std::cout << "normal : " << argv[6] << std::endl;
+		std::cout << "normal : " << argv[7] << std::endl;
 		std::cout << "flocal length : " << fl << std::endl;
 		std::cout << "center x : " << cx << std::endl;
 		std::cout << "center y : " << cy << std::endl;
@@ -146,8 +147,8 @@ int main( int argc, char** argv )
 	inDepthConf = 255;
 
 	inDepth.convertTo(inDepth, CV_32F);
-	//! convert [mm]
-	//inDepth.convertTo(inDepth, CV_32F, 4.0f / 65535.0f * 1000.0f);
+	//! depth convert from maxDepth[mm]
+	inDepth.convertTo(inDepth, CV_32F, maxDepth / 65535.0f);
 	depth2normal(inDepth, inDepthConf, 220, tap, fl, cx, cy, outNormal);
 	writeNormal(argv[6], outNormal);
 
