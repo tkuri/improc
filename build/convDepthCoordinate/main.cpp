@@ -58,8 +58,6 @@ void usage()
 
 int main( int argc, char** argv )
 {
-	usage();
-
 	cv::Mat inDepth; //! 16bit 1ch
 	cv::Mat outDepth; //! 16bit 1ch
 	float fl, cx, cy;
@@ -75,9 +73,15 @@ int main( int argc, char** argv )
 		std::cout << "flocal length : " << fl << std::endl;
 		std::cout << "center x : " << cx << std::endl;
 		std::cout << "center y : " << cy << std::endl;
+
+		if(inDepth.data == NULL){
+			std::cout << "Data pointer is NULL" << std::endl;
+			return 1;
+		}
 	}
 	else {
 		std::cout << "parameter not enough" << std::endl;
+		usage();
 		return 1;
 	}
 
