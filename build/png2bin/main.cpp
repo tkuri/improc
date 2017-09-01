@@ -10,36 +10,41 @@ int main(int argc, char** argv)
 
 	for(int n=1; n<argc; n++){
 
-		if(FilenameParser::getExtension(argv[n]) == "stb"){
+		if(FilenameParser::getExtension(argv[n]) == "png"){
 
-			std::ifstream input;
-			input.open(argv[n], std::ios::in | std::ios::binary);
-			if(!input.is_open()) break;
+			cv::Mat image = cv::imread(argv[n], 6);
+			if(image.data == NULL) break;
+				
+			unsigned short width = image.cols;
+			unsigned short height = image.rows;
 
-			int width;
-			int height;
-			int dummy;
-
-			input.read((char*)&dummy, sizeof(int));
-			input.read((char*)&dummy, sizeof(int));
-			input.read((char*)&width, sizeof(int));
-			input.read((char*)&height, sizeof(int));
-		
-			// floatèoóÕ
-			//cv::Mat_<float> output(height, width);
-			//input.read((char*)output.data, width * height * sizeof(float));
-
-			// intèoóÕ
-			cv::Mat_<int> output(height, width);
-			input.read((char*)output.data, width * height * sizeof(int));
-
-			std::string filename = FilenameParser::removeExtension(argv[n]) + ".csv";
+			std::string filename = FilenameParser::removeExtension(argv[n]) + ".bin";
 			std::cout << filename << std::endl;
 
-			std::ofstream ofs(filename);
-			ofs << cv::format(output, cv::Formatter::FMT_CSV) << std::endl;
+			std::ofstream output;
+			output.open(filename, std::ios::binary);
+			output.write((char*)&width, sizeof(unsigned short));
+			output.write((char*)&height, sizeof(unsigned short));
+			output.write((char*)image.data, width * height * sizeof(unsigned short));
+		}
+		else if(FilenameParser::getExtension(argv[n]) == "bin"){
 
-//			imwrite(filename, output);
+			std::ifstream input;
+			input.open(argv[n], std::ios::binary);
+			if(!input) break;
+
+			unsigned short width;
+			unsigned short height;
+			input.read((char*)&width, sizeof(unsigned short));
+			input.read((char*)&height, sizeof(unsigned short));
+		
+			cv::Mat output = cv::Mat(height, width, CV_16U);
+			input.read((char*)output.data, width * height * sizeof(unsigned short));
+		
+			std::string filename = FilenameParser::removeExtension(argv[n]) + ".png";
+			std::cout << filename << std::endl;
+
+			cv::imwrite(filename, output);
 		}
 		else{
 			std::cout << "Invalid file format" << std::endl;
