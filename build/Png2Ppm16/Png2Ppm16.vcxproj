@@ -12,7 +12,8 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{C705E079-562C-4F77-8CA3-5F5145BAF3A6}</ProjectGuid>
-    <RootNamespace>Png2Ppm16</RootNamespace>
+    <RootNamespace>png2ppm16</RootNamespace>
+    <ProjectName>png2ppm16</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
