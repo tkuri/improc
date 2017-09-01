@@ -11,7 +11,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\sources\Misc\pixel_array.cpp" />
     <ClCompile Include="main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\sources\Misc\pixel_array.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{D53CFF11-030A-4C9E-957D-072D19D0C8C7}</ProjectGuid>
