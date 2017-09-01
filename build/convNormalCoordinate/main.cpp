@@ -204,6 +204,13 @@ int convertCamToTangent(const cv::Mat_<cv::Vec3f>& src, cv::Mat_<cv::Vec3f>& dst
 	return 0;
 }
 
+void usage()
+{
+	std::cout << "convert normal coordinate" << std::endl;
+	std::cout << "usage: " << std::endl;
+	std::cout << "xx.exe in_normal_file fx fy cx cy out_normal_file" << std::endl;
+}
+
 
 int main( int argc, char** argv )
 {
@@ -212,19 +219,27 @@ int main( int argc, char** argv )
 	cv::Mat dst;
 	double fx,fy,cx,cy;
 
-	file = argv[1];
-	img = cv::imread( file.c_str(),  CV_LOAD_IMAGE_ANYDEPTH | CV_LOAD_IMAGE_COLOR );
-	fx = static_cast<float>(atof(argv[2]));
-	fy = static_cast<float>(atof(argv[3]));
-	cx = static_cast<float>(atof(argv[4]));
-	cy = static_cast<float>(atof(argv[5]));
+	if(argc == 7) {
+		file = argv[1];
+		img = cv::imread( file.c_str(),  CV_LOAD_IMAGE_ANYDEPTH | CV_LOAD_IMAGE_COLOR );
+		fx = static_cast<float>(atof(argv[2]));
+		fy = static_cast<float>(atof(argv[3]));
+		cx = static_cast<float>(atof(argv[4]));
+		cy = static_cast<float>(atof(argv[5]));
 
-	std::cout << "normal : " << argv[1] << std::endl;
-	std::cout << "flocal length x : " << fx << std::endl;
-	std::cout << "flocal length y : " << fy << std::endl;
-	std::cout << "center x : " << cx << std::endl;
-	std::cout << "center y : " << cy << std::endl;
-
+		std::cout << "inNormal : " << argv[1] << std::endl;
+		std::cout << "outNormal : " << argv[6] << std::endl;
+		std::cout << "flocal length x : " << fx << std::endl;
+		std::cout << "flocal length y : " << fy << std::endl;
+		std::cout << "center x : " << cx << std::endl;
+		std::cout << "center y : " << cy << std::endl;
+	}
+	else {
+		std::cout << "parameter not enough" << std::endl;
+		usage();
+		return 1;
+	}
+		
 	int width = img.cols;
 	int height = img.rows;
 	int dep = img.depth();
@@ -235,13 +250,13 @@ int main( int argc, char** argv )
 	cv::Mat fimg;
 	cv::Mat_<cv::Vec3d> fdst = cv::Mat_<cv::Vec3d>( height, width );
 	if( dep == 0 && ch == 3 ){
-		 img.convertTo(fimg, CV_64FC3, 1.0/127.0, -127.0/128.0);
+		 img.convertTo(fimg, CV_64FC3, 1.0/127.0, -128.0/127.0);
 		 convertTangentToCam2(fimg, fdst, fx, fy, cx, cy);
 		 fdst.convertTo(dst, CV_8UC3, 127.0, 128.0);
 	}
 	else if( dep == 2 && ch == 3 ){
 		 //img.convertTo(fimg, CV_32FC3, 1.0/32767.0, -32767.0/32768.0);
-		 img.convertTo(fimg, CV_64FC3, 1.0/32767.0, -32767.0/32768.0);
+		 img.convertTo(fimg, CV_64FC3, 1.0/32767.0, -32768.0/32767.0);
 		 convertTangentToCam2(fimg, fdst, fx, fy, cx, cy);
 		 fdst.convertTo(dst, CV_16UC3, 32767.0, 32768.0);
 	}
@@ -252,7 +267,7 @@ int main( int argc, char** argv )
 	}
 
 
-	cv::imwrite( "convNormal.png", dst );
+	cv::imwrite(argv[6], dst);
 
 	std::cout << "Convert finished. ";
 //	std::cout << "Please return any key.. ";
