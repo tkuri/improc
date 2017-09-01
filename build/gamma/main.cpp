@@ -7,7 +7,7 @@
 #include <opencv2/opencv.hpp>
 
 //! 0:sRGB, 1:ISGamma, 2:3PointGamma
-const int gammaMode = 2;
+const int gammaMode = 0;
 
 const double idx[1024] = 
 {
