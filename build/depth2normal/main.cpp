@@ -101,7 +101,7 @@ void usage()
 {
 	std::cout << "convert depth to normal" << std::endl;
 	std::cout << "usage: " << std::endl;
-	std::cout << "xx.exe in_depth_file fl cx cy out_normal_file" << std::endl;
+	std::cout << "xx.exe in_depth_file fl cx cy maxDepth tap out_normal_file" << std::endl;
 }
 
 
@@ -128,6 +128,11 @@ int main( int argc, char** argv )
 		std::cout << "center x : " << cx << std::endl;
 		std::cout << "center y : " << cy << std::endl;
 		std::cout << "tap : " << tap << std::endl;
+
+		if(inDepth.data == NULL){
+			std::cout << "Data pointer is NULL" << std::endl;
+			return 1;
+		}
 	}
 	else {
 		std::cout << "parameter not enough" << std::endl;
@@ -150,7 +155,7 @@ int main( int argc, char** argv )
 	//! depth convert from maxDepth[mm]
 	inDepth.convertTo(inDepth, CV_32F, maxDepth / 65535.0f);
 	depth2normal(inDepth, inDepthConf, 220, tap, fl, cx, cy, outNormal);
-	writeNormal(argv[6], outNormal);
+	writeNormal(argv[7], outNormal);
 
 	return 0;
 }
