@@ -24,8 +24,7 @@ static int writeNormal(const std::string& filename, TMat& normal, int option = 0
 }
 
 
-template<class T, int zeroLevel>
-int inv( const float azimuth, const float zenith, cv::Mat_<cv::Vec3f>& normal )
+int makeNormal( const float azimuth, const float zenith, cv::Mat_<cv::Vec3f>& normal )
 {
 	for( int y = 0 ; y < normal.rows ; y++ )
 	{
@@ -35,9 +34,9 @@ int inv( const float azimuth, const float zenith, cv::Mat_<cv::Vec3f>& normal )
 			float ny = std::sin(azimuth) * std::sin(zenith);
 			float nz = std::cos(zenith);
 
-			normal.at<cv::Vec3f>[0] = nz;
-			normal.at<cv::Vec3f>[1] = ny;
-			normal.at<cv::Vec3f>[2] = nx;
+			normal.at<cv::Vec3f>(y, x)[0] = nz;
+			normal.at<cv::Vec3f>(y, x)[1] = ny;
+			normal.at<cv::Vec3f>(y, x)[2] = nx;
 
 		}
 	}
@@ -54,16 +53,22 @@ void usage(){
 
 int main( int argc, char** argv )
 {
+	if (argc != 6){
+		usage();
+		return -1;
+	}
+
 	std::string file = argv[1];
 	int width = atoi(argv[2]);
 	int height = atoi(argv[3]);
 	float azimuth = static_cast<float>(atof(argv[4]));
 	float zenith = static_cast<float>(atof(argv[5]));
-	azimuth /= 180 * PI;
-	zenith /= 180 * PI;
+	azimuth = azimuth / 180.0f * PI;
+	zenith = zenith / 180.0f * PI;
 
 	cv::Mat_<cv::Vec3f> normal(height, width);
 
+	makeNormal(azimuth, zenith, normal);
 	writeNormal( file, normal );
 	
 
