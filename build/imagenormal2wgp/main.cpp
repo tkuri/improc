@@ -49,6 +49,12 @@ int convWGP2(const cv::Mat_<ushort>& img, const cv::Mat_<cv::Vec3w>& normal, cv:
 	return 0;
 }
 
+void usage(){
+	std::cout << "usage: " << std::endl;
+	std::cout << "xx.exe normal_file image_file output_file" << std::endl;
+}
+
+
 
 int main(int argc, char** argv)
 {
@@ -81,6 +87,7 @@ int main(int argc, char** argv)
 
 	cv::Mat_<ushort> dst(img.rows, img.cols);
 
+	// if use constant image value
 	if(0){
 		cv::Mat_<ushort> buf(img.rows, img.cols, 64*255);
 		img = buf.clone();
