@@ -13,6 +13,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{DEB078B6-2EB7-49E9-AD99-98B261992371}</ProjectGuid>
     <RootNamespace>gainImage</RootNamespace>
+    <ProjectName>gain_image</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
