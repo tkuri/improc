@@ -1,9 +1,6 @@
 
-#include <Windows.h>
-#include <vector>
 #include <fstream>
 #include <iostream>
-#include <iomanip>
 #include <opencv2/opencv.hpp>
 
 const float PI = 3.141592654f;
@@ -71,13 +68,9 @@ int main( int argc, char** argv )
 	makeNormal(azimuth, zenith, normal);
 	writeNormal( file, normal );
 	
-
 	std::cout << "Process finished. ";
 //	std::cout << "Please return any key.. ";
-//	getchar();
-
-
-	
+//	getchar();	
 
 	return 0;	
 }
