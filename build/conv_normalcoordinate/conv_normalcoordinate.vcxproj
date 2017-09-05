@@ -11,8 +11,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{1BCA9478-5956-4C20-847A-CCAE7DD313F5}</ProjectGuid>
-    <RootNamespace>calcROISigmaRaw</RootNamespace>
+    <ProjectGuid>{35743795-1BB4-424A-BBA6-FD532950F97D}</ProjectGuid>
+    <RootNamespace>convNormalCoordinate</RootNamespace>
+    <ProjectName>conv_normalcoordinate</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">

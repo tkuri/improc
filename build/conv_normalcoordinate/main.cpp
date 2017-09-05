@@ -1,11 +1,7 @@
 
-#include <Windows.h>
-#include <vector>
 #include <fstream>
 #include <iostream>
-#include <iomanip>
 #include <opencv2/opencv.hpp>
-
 
 typedef cv::Vec3f TNormal;     //! type of the normal vector
 static const int kCvTypeNormal = CV_MAKETYPE(cv::DataType<TNormal>::depth, 3); //! OpenCV type of the normal vector

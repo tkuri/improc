@@ -1,9 +1,6 @@
 
-#include <Windows.h>
-#include <vector>
 #include <fstream>
 #include <iostream>
-#include <iomanip>
 #include <opencv2/opencv.hpp>
 
 //const int _polarPhase = 3; // 135 top

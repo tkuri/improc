@@ -11,8 +11,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{35743795-1BB4-424A-BBA6-FD532950F97D}</ProjectGuid>
-    <RootNamespace>convNormalCoordinate</RootNamespace>
+    <ProjectGuid>{D9D6CA46-47FC-4ADE-BD3D-A16C40620AFC}</ProjectGuid>
+    <RootNamespace>calcROISigma</RootNamespace>
+    <ProjectName>calc_roisigma</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
@@ -31,13 +32,13 @@
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\..\libs\common.props" />
     <Import Project="..\..\libs\OpenCV300.debug.props" />
+    <Import Project="..\..\libs\common.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\..\libs\common.props" />
     <Import Project="..\..\libs\OpenCV300.release.props" />
+    <Import Project="..\..\libs\common.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup />

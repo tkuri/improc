@@ -13,6 +13,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{8CC83865-A943-48B6-97F0-20B52514E348}</ProjectGuid>
     <RootNamespace>convDepthCoordinate</RootNamespace>
+    <ProjectName>conv_depthcoordinate</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
