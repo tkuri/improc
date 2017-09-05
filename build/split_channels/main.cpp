@@ -1,11 +1,8 @@
 
-#include <Windows.h>
-#include <vector>
 #include <fstream>
 #include <iostream>
-#include <iomanip>
 #include <opencv2/opencv.hpp>
-#include "Misc/FilenameParser.h"
+#include "misc/filename_parser.h"
 
 template<class T>
 int separateChannels(const cv::Mat& src, cv::Mat& dst0, cv::Mat& dst1, cv::Mat& dst2, cv::Mat& dst3)
@@ -85,8 +82,6 @@ int main( int argc, char** argv )
 	std::cout << "Process finished. ";
 //	std::cout << "Please return any key.. ";
 //	getchar();
-
-
 	
 
 	return 0;	
