@@ -13,6 +13,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{1992E95C-B2DA-46F4-8287-733EE9506E08}</ProjectGuid>
     <RootNamespace>normalDiff</RootNamespace>
+    <ProjectName>diff_normals</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
