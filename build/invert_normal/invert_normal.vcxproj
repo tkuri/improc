@@ -13,6 +13,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{855E3F39-4428-4DF6-B7DE-8CE78AF891D0}</ProjectGuid>
     <RootNamespace>invertNormal</RootNamespace>
+    <ProjectName>invert_normal</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">

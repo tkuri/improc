@@ -1,9 +1,6 @@
 
-#include <Windows.h>
-#include <vector>
 #include <fstream>
 #include <iostream>
-#include <iomanip>
 #include <opencv2/opencv.hpp>
 
 //const int zeroLevel = 32767;
@@ -58,15 +55,11 @@ int main( int argc, char** argv )
 		return -1;
 	}
 
-
 	cv::imwrite( "invNormal.png", dst );
 
 	std::cout << "Convert finished. ";
 //	std::cout << "Please return any key.. ";
 //	getchar();
-
-
-	
 
 	return 0;	
 }

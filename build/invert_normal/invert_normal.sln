@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "invertNormal", "invertNormal.vcxproj", "{855E3F39-4428-4DF6-B7DE-8CE78AF891D0}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "invert_normal", "invert_normal.vcxproj", "{855E3F39-4428-4DF6-B7DE-8CE78AF891D0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
