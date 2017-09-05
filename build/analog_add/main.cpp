@@ -1,11 +1,8 @@
 
-#include <Windows.h>
-#include <vector>
 #include <fstream>
 #include <iostream>
-#include <iomanip>
 #include <opencv2/opencv.hpp>
-#include "Misc/FilenameParser.h"
+#include "misc/filename_parser.h"
 
 
 template<class T>
