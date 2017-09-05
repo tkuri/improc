@@ -1,6 +1,6 @@
 
 #include <algorithm>
-#include "FilenameParser.h"
+#include "filename_parser.h"
 
 FilenameParser::FilenameParser(void)
 {
