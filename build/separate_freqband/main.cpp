@@ -1,17 +1,8 @@
 
-#include <Windows.h>
-#include <vector>
 #include <fstream>
 #include <iostream>
-#include <iomanip>
 #include <opencv2/opencv.hpp>
 
-
-/*!
- * ファイル名から拡張子を削除
- * @param[in] fn ファイル名(フルパス or 相対パス)
- * @return フォルダパス
- */
 inline std::string ExtractPathWithoutExt(const std::string &fn)
 {
     std::string::size_type pos;
