@@ -21,10 +21,13 @@ int convNormal2Angle(const cv::Mat_<cv::Vec3w>& normal, cv::Mat_<float>& azimuth
 			float ny = static_cast<float>(normal.at<cv::Vec3w>(y, x)[1]) / 32767.0f - 32768.0f / 32767.0f;
 			float nz = static_cast<float>(normal.at<cv::Vec3w>(y, x)[0]) / 32767.0f - 32768.0f / 32767.0f;
 
-			float zenith = acos(nz);
-			float azimuth = atan2f(ny, nx);
-			if (azimuth < 0) azimuth += 2*PI;
-			else if (azimuth >= 2*PI) azimuth -= 2*PI;
+			float zen = acos(nz);
+			float azi = atan2f(ny, nx);
+			if (azi < 0) azi += 2*PI;
+			else if (azi >= 2*PI) azi -= 2*PI;
+
+			azimuth(y, x) = azi;
+			zenith(y, x) = zen;
 
 		}
 	}
@@ -39,13 +42,15 @@ int evalNormal(const cv::Mat_<float>& azimuthGT, const cv::Mat_<float>& zenithGT
 	{
 		for (int x = x0; x < x0 + width; ++x)
 		{
-			float aziGT = azimuthGT(y, x);
-			float zenGT = zenithGT(y, x);
-			float azi = azimuth(y, x);
-			float zen = zenith(y, x);
+			float aziGT = azimuthGT(y, x) * 180.0f / PI;
+			float zenGT = zenithGT(y, x) * 180.0f / PI;
+			float azi = azimuth(y, x) * 180.0f / PI;
+			float zen = zenith(y, x) * 180.0f / PI;
 
-			azimuthDiff += (aziGT - azi) * (aziGT - azi);
-			zenithDiff  += (zenGT - zen) * (zenGT - zen);			
+			//azimuthDiff += (aziGT - azi) * (aziGT - azi);
+			//zenithDiff  += (zenGT - zen) * (zenGT - zen);			
+			azimuthDiff += fabsf(aziGT - azi);
+			zenithDiff += fabsf(zenGT - zen);
 		}
 	}
 
@@ -109,7 +114,7 @@ int main(int argc, char** argv)
 	evalNormal(azimuthGT, zenithGT, azimuth, zenith, x0, y0, width, height, azimuthError, zenithError);
 
 	std::ofstream ofs(evalFile.c_str(), std::ios::app);
-	ofs << "azimuthError,zenithError" << std::endl;
+	//ofs << "azimuthError,zenithError" << std::endl;
 	ofs << azimuthError << "," << zenithError << std::endl;
 	ofs.close();
 
