@@ -2,3 +2,9 @@
 *.suo
 *.user
 *.ipch
+*.pdb
+*.log
+*.obj
+*.lastbuildstate
+*.tlog
+*.db
