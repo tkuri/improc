@@ -9,3 +9,7 @@
 *.tlog
 *.db
 *.opensdf
+bin/Debug/
+*.manifest
+*.cache
+*.idb
