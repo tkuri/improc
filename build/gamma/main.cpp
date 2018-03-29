@@ -1,9 +1,6 @@
 
-#include <Windows.h>
-#include <vector>
 #include <fstream>
 #include <iostream>
-#include <iomanip>
 #include <opencv2/opencv.hpp>
 
 //! 0:sRGB, 1:ISGamma, 2:3PointGamma
@@ -142,7 +139,12 @@ int main( int argc, char** argv )
 		if(img.data==NULL) break;
 
 		cv::Mat tmp;
-		img.convertTo(tmp, CV_32FC3, 1.0f/65535.0f);
+		if(img.depth()==2){
+			img.convertTo(tmp, CV_32FC3, 1.0f/65535.0f);
+		}
+		else{
+			img.convertTo(tmp, CV_32FC3, 1.0f/255.0f);
+		}
 
 		if(gammaMode==0){
 			cv::pow(tmp, 1.0f/gammaCoeff, tmp);
@@ -156,7 +158,12 @@ int main( int argc, char** argv )
 			tmp = tmp2;
 		}
 
-		tmp.convertTo(dst, img.type(), 65535.0f);
+		if(img.depth()==2){
+			tmp.convertTo(dst, img.type(), 65535.0f);
+		}
+		else{
+			tmp.convertTo(dst, img.type(), 255.0f);
+		}
 
 		std::string ofile = ExtractPathWithoutExt(file);
 		ofile += "_gamma.png";
