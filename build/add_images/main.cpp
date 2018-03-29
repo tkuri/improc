@@ -1,11 +1,8 @@
 ﻿
-#include <Windows.h>
-#include <vector>
 #include <fstream>
 #include <iostream>
-#include <iomanip>
 #include <opencv2/opencv.hpp>
-#include "Misc/FilenameParser.h"
+#include "misc/filename_parser.h"
 
 template<typename T>
 struct FloatType{
@@ -92,9 +89,18 @@ int addImg( cv::Mat& src0, cv::Mat& src1, cv::Mat& dst, const float alpha = 1.0f
 	return 0;
 }
 
+void Usage(){
+	std::cout << "Usage : img0 img1 outfile a b offset (a*img0 + b*img1 + offset)" << std::endl;
+}
+
 
 int main( int argc, char** argv )
 {
+	if(argc!=7){
+		Usage();
+		return -1;
+	}
+
 	cv::Mat img0, img1;
 	cv::Mat dst;
 
@@ -106,7 +112,16 @@ int main( int argc, char** argv )
 	float offset = static_cast<float>(atof(argv[6]));
 
 	img0 = cv::imread( file0.c_str(), 6 );
+	if(img0.data == NULL){
+		std::cout << " Error : Input0 is null. ";		
+		return -1;
+	}
+
 	img1 = cv::imread( file1.c_str(), 6 );
+	if(img1.data == NULL){
+		std::cout << " Error : Input1 is null. ";		
+		return -1;
+	}
 
 	if(img0.type() != img1.type()){
 		std::cout << " Error : Inputs type must be equal. ";
