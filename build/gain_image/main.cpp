@@ -3,8 +3,6 @@
 #include <iostream>
 #include <opencv2/opencv.hpp>
 
-std::string ofn = ".txt";
-
 inline std::string ExtractPathWithoutExt(const std::string &fn)
 {
     std::string::size_type pos;
