@@ -34,6 +34,32 @@ int convNormal2Angle(const cv::Mat_<cv::Vec3w>& normal, cv::Mat_<ushort>& azimut
 	return 0;
 }
 
+int convNormal2Angle8bit(const cv::Mat_<cv::Vec3b>& normal, cv::Mat_<ushort>& azimuth, cv::Mat_<ushort>& zenith)
+{
+	for (int y = 0; y < normal.rows; y++)
+	{
+		for (int x = 0; x < normal.cols; x++)
+		{
+			float nx = static_cast<float>(normal.at<cv::Vec3b>(y, x)[2]) / 127.0f - 128.0f / 127.0f;
+			float ny = static_cast<float>(normal.at<cv::Vec3b>(y, x)[1]) / 127.0f - 128.0f / 127.0f;
+			float nz = static_cast<float>(normal.at<cv::Vec3b>(y, x)[0]) / 127.0f - 128.0f / 127.0f;
+
+			float azi = atan2f(ny, nx);
+			if (azi < 0) azi += 2 * PI;
+			else if (azi >= 2 * PI) azi -= 2 * PI;
+
+			float zen = acos(nz);
+			if (zen < 0) zen = 0;
+			else if (zen > PI / 2) zen = PI / 2;
+
+			azimuth(y, x) = static_cast<ushort>(azi / 2.0f / PI * 65535.0f);
+			zenith(y, x) = static_cast<ushort>(zen * 2.0f / PI * 65535.0f);
+		}
+	}
+
+	return 0;
+}
+
 void usage(){
 	std::cout << "usage: " << std::endl;
 	std::cout << "xx.exe normal_file" << std::endl;
@@ -52,15 +78,30 @@ int main(int argc, char** argv)
 			return -1;
 		}
 
-		if (normal.depth() != 2){
-			std::cout << " Error : Both normal images bit must be 16bit. ";
-			return -1;
-		}
+		//if (normal.depth() != 2){
+		//	std::cout << " Error : Both normal images bit must be 16bit. ";
+		//	return -1;
+		//}
 
 		cv::Mat_<ushort> azimuth(normal.size());
 		cv::Mat_<ushort> zenith(normal.size());
 
-		convNormal2Angle(normal, azimuth, zenith);
+		if (normal.depth() == 0){
+			std::cout << " 8bit input. ";
+			convNormal2Angle8bit(normal, azimuth, zenith);
+
+		}
+		else if (normal.depth() == 2){
+			std::cout << " 16bit input. ";
+			convNormal2Angle(normal, azimuth, zenith);
+		}
+		else{
+			std::cout << " Error : Normal images bit must be 8bit or 16bit. ";
+			return -1;
+		}
+
+
+		//convNormal2Angle(normal, azimuth, zenith);
 		std::string filename = FilenameParser::removeExtension(argv[n]);
 
 
