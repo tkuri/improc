@@ -18,8 +18,8 @@ int main( int argc, char** argv )
 		return -1;
 	}
 
-	//cv::Mat src = cv::imread(argv[1], CV_LOAD_IMAGE_ANYDEPTH | CV_LOAD_IMAGE_ANYCOLOR);
-	cv::Mat src = cv::imread(argv[1], CV_LOAD_IMAGE_ANYCOLOR);
+	cv::Mat src = cv::imread(argv[1], CV_LOAD_IMAGE_ANYDEPTH | CV_LOAD_IMAGE_ANYCOLOR);
+	//cv::Mat src = cv::imread(argv[1], CV_LOAD_IMAGE_ANYCOLOR);
 	if (src.data == NULL){
 		std::cout << "input is invalid. " << std::endl;
 		return -1;
