@@ -40,6 +40,8 @@ int main( int argc, char** argv )
 	cv::Mat rotation_matrix = cv::getRotationMatrix2D(center, angle, scale);
 	cv::Mat affine_matrix = rotation_matrix.clone();
 
+	std::cout << rotation_matrix.type() << std::endl;
+
 	affine_matrix.at<double>(0, 2) = affine_matrix.at<double>(0, 2) - w / 2 + w_rot / 2;
 	affine_matrix.at<double>(1, 2) = affine_matrix.at<double>(1, 2) - h / 2 + h_rot / 2;
 
