@@ -43,8 +43,15 @@ int	depth2normal(const cv::Mat_<TDepth>& inDepth, const cv::Mat_<TConfidence>& i
 	cv::Mat_<TDepth>  uposOrg = upos.clone();
 	cv::Mat_<TDepth>  vposOrg = vpos.clone();
 
-	upos = upos.mul(inDepth, 1.0f/fl);
-	vpos = vpos.mul(inDepth, 1.0f/fl);
+	//upos = upos.mul(inDepth, 1.0f/fl);
+	//vpos = vpos.mul(inDepth, 1.0f/fl);
+	upos = upos * 1.0f/fl;
+    vpos = vpos * 1.0f/fl;
+
+	float scale = 65535.0f;
+	//upos *= scale;
+	//vpos *= scale;
+	inDepth *= scale;
 
 	cv::Mat_<TDepth> uposDevx, uposDevy, vposDevx, vposDevy, depthDevx, depthDevy;
 	cv::Sobel(upos, uposDevx, CV_32F, 1, 0, taps);
@@ -127,6 +134,7 @@ int main( int argc, char** argv )
 		std::cout << "flocal length : " << fl << std::endl;
 		std::cout << "center x : " << cx << std::endl;
 		std::cout << "center y : " << cy << std::endl;
+		std::cout << "maxDepth : " << maxDepth << std::endl;
 		std::cout << "tap : " << tap << std::endl;
 
 		if(inDepth.data == NULL){
@@ -147,13 +155,16 @@ int main( int argc, char** argv )
 		std::cout << "depth bit length must be 1ch" << std::endl;
 		return 1;
 	}
+	std::cout << "Depth bit :" << inDepth.depth() << std::endl;
 
 	cv::Mat inDepthConf = inDepth.clone();
 	inDepthConf = 255;
+	
 
-	inDepth.convertTo(inDepth, CV_32F);
+	//inDepth.convertTo(inDepth, CV_32F);
 	//! depth convert from maxDepth[mm]
 	inDepth.convertTo(inDepth, CV_32F, maxDepth / 65535.0f);
+	//inDepth.convertTo(inDepth, CV_32F, 1.0f / 65535.0f);
 	depth2normal(inDepth, inDepthConf, 220, tap, fl, cx, cy, outNormal);
 	writeNormal(argv[7], outNormal);
 
